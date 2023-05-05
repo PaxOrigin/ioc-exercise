@@ -32,6 +32,8 @@ public static class Startup
 
                 string? connectionString = context.Configuration.GetConnectionString("DB1");
 
+
+
                 service.AddScoped<IUserService, UserService>();
                 service.AddScoped<IUserRepository, UserRepository>();
                 service.AddTransient<IPasswordValidator>(_ => new AtLeastOneDigitPasswordValidator(validateSpecialChar));
@@ -40,9 +42,11 @@ public static class Startup
                 service.AddTransient<IFileWriter, FileWriter>();
                 service.AddTransient<ICsvConverter, CsvConverter>();
                 service.AddTransient<ICreateUserFileName, CreateUserFileName>();
+                service.AddHostedService<TestApp1>();
                 service.AddScoped<IApp, TestApp1>();
 
 
             });
+          
     }
 }
