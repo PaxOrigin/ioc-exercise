@@ -10,13 +10,6 @@ public class FileWriter : FileSystemWorkerBase, IFileWriter
         filepath.Append(_currentDirectory);
         filepath.Append('/');
         filepath.Append(fileName);
-        try
-        {
-            File.WriteAllText(filepath.ToString(), content);
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine(ex.Message);
-        }
+        File.WriteAllText(filepath.ToString(), content);
     }
 }

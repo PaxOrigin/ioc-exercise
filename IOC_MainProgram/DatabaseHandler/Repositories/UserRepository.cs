@@ -32,17 +32,7 @@ public class UserRepository : IUserRepository
 
     public User? RetrieveUser(int ID)
     {
-        try
-        {
-            return _credentialDBContext.Users.First(p => p.Id == ID);
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine("Failed To Retrieve User");
-            Console.Error.WriteLine(ex.Message);
-            return null;
-        }
-
+        return _credentialDBContext.Users.FirstOrDefault(p => p.Id == ID);
     }
 
 }
