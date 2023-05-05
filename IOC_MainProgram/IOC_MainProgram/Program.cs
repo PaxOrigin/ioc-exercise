@@ -10,8 +10,8 @@ public class Program
 {
     static void Main(string[] args)
     {
-        var host = Startup.CreateHostBuilder().Build();
-        host.Services.GetService<IApp>()!.Run();
+        Startup.CreateHostBuilder().Build().Run();
+        // host.Services.GetService<IApp>()!.Run();
 
     }
 
