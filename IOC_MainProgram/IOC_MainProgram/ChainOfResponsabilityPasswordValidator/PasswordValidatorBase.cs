@@ -9,5 +9,5 @@ internal abstract class PasswordValidatorBase : IPasswordValidator
         _nextValidator = nextValidator;
     }
 
-    public abstract bool Validate(string password);
+    public abstract bool Validate(string? password);
 }

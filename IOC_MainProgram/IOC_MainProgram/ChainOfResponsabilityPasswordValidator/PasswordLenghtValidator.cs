@@ -7,7 +7,7 @@ internal class PasswordLenghtValidator : PasswordValidatorBase
     {
 
     }
-    public override bool Validate(string password)
+    public override bool Validate(string? password)
     {
         if (password.Length >= 7)
         {

@@ -9,6 +9,10 @@ using IOCMainProgram.ChainOfResponsabilityPasswordValidator;
 using IOCMainProgram.CreateFileNameClasses;
 using IOCMainProgram.Services;
 using IOCMainProgram.TestApp;
+using IOCMainProgram.TestApp.ConsoleApp;
+using IOCMainProgram.TestApp.ConsoleApp.MenuServices;
+using IOCMainProgram.TestApp.ConsoleApp.MenuServices.ConcreteMenus;
+using IOCMainProgram.TestApp.ConsoleApp.MenuServices.MenuFunctions;
 using IOCMainProgram.TestApp.TestApp1;
 
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +38,7 @@ public static class Startup
 
 
 
-                service.AddScoped<IUserService, UserService>();
+                service.AddSingleton<IUserService, UserService>();
                 service.AddScoped<IUserRepository, UserRepository>();
                 service.AddTransient<IPasswordValidator>(_ => new AtLeastOneDigitPasswordValidator(validateSpecialChar));
                 service.AddDbContext<CredentialDBContext>(options => options.UseSqlServer(connectionString));
@@ -42,11 +46,17 @@ public static class Startup
                 service.AddTransient<IFileWriter, FileWriter>();
                 service.AddTransient<ICsvConverter, CsvConverter>();
                 service.AddTransient<ICreateUserFileName, CreateUserFileName>();
-                service.AddHostedService<TestApp1>();
+                service.AddHostedService<ConsoleApp>();
+                service.AddTransient<IMainMenuService, MainMenuService>();
+                service.AddTransient<ISignUpMenuService, SignupMenuService>();
+                service.AddTransient<IMenuElements, MenuElements>();
+                service.AddTransient<ILoginMenuService, LoginMenuService>();
+                service.AddTransient<IConsoleStringReader, ConsoleStringReader>();
+                service.AddTransient<ILogoutServiceMenu, LogOutServiceMenu>();
                 service.AddScoped<IApp, TestApp1>();
 
 
             });
-          
+
     }
 }

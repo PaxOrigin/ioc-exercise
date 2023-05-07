@@ -8,7 +8,7 @@ internal class UpperLetterPasswordValidator : PasswordValidatorBase
 
     }
 
-    public override bool Validate(string password)
+    public override bool Validate(string? password)
     {
         if (password.Any(p => char.IsUpper(p)))
         {

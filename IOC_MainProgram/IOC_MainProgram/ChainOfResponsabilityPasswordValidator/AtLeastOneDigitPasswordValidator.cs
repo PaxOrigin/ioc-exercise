@@ -7,9 +7,9 @@ internal class AtLeastOneDigitPasswordValidator : PasswordValidatorBase
     {
 
     }
-    public override bool Validate(string password)
+    public override bool Validate(string? password)
     {
-        if (password.Any(p => char.IsNumber(p)))
+        if (!string.IsNullOrWhiteSpace(password) && password.Any(p => char.IsNumber(p)))
         {
             if (_nextValidator is not null)
                 return _nextValidator.Validate(password);

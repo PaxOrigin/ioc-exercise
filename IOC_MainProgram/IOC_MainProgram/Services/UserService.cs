@@ -43,9 +43,7 @@ public class UserService : IUserService
         if (int.TryParse(id, out int idToSearch))
         {
             User? user = _userRepository.RetrieveUser(idToSearch);
-            if (_loggedUser is not null)
-                LogOut();
-            if (user is not null)
+            if (user is not null && user.Password == password)
             {
                 _loggedUser = user;
                 return (true, "successfully logged in");
@@ -82,10 +80,13 @@ public class UserService : IUserService
         return (false, "You must Login first");
     }
 
-    public (bool, string) SignUp(string email, string password)
+    public (bool, string) SignUp(string? email, string? password)
     {
         if (_passwordValidator.Validate(password))
         {
+            if (!ValidateEmail(email))
+                return (false, "Invalid email");
+
             if (_userRepository.CheckExistance(email))
             {
                 return (false, "A user with this email already exists in the database. ");
@@ -104,5 +105,19 @@ public class UserService : IUserService
         }
 
         return (false, "Password is not valid.");
+    }
+
+    public User? GetLoggedUser()
+    {
+        return _loggedUser;
+    }
+
+    private bool ValidateEmail(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email) || !email.Any(p => p == '@'))
+        {
+            return false;
+        }
+        return true;
     }
 }

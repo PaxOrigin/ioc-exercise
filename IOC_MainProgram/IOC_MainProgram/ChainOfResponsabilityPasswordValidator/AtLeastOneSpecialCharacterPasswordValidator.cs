@@ -7,7 +7,7 @@ internal class AtLEastOneSpecialCharacterPasswordValidator : PasswordValidatorBa
 
     }
 
-    public override bool Validate(string password)
+    public override bool Validate(string? password)
     {
         if (!password.All(p => char.IsLetterOrDigit(p)))
         {

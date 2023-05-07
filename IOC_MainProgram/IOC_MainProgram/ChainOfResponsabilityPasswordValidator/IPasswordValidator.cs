@@ -2,5 +2,5 @@
 
 public interface IPasswordValidator
 {
-    public bool Validate(string password);
+    public bool Validate(string? password);
 }
