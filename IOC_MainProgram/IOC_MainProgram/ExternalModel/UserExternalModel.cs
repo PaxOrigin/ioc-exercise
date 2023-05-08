@@ -16,11 +16,13 @@ public class UserExternalModel : IConvertibleToCsv
 
     public List<string> ConvertFieldsToStringList()
     {
-        List<string> fields = new List<string>();
-        fields.Add(_user.Id.ToString());
-        fields.Add(_user.Email);
-        fields.Add(_user.Password);
-        fields.Add(_user.UserCreationDate.ToString("yyyy MM dd"));
+        List<string> fields = new List<string>
+        {
+            _user.Id.ToString(),
+            _user.Email,
+            _user.Password,
+            _user.UserCreationDate.ToString("yyyy MM dd")
+        };
         return fields;
 
     }

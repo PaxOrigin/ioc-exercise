@@ -8,12 +8,10 @@ using FileSystemManager;
 using IOCMainProgram.ChainOfResponsabilityPasswordValidator;
 using IOCMainProgram.CreateFileNameClasses;
 using IOCMainProgram.Services;
-using IOCMainProgram.TestApp;
 using IOCMainProgram.TestApp.ConsoleApp;
 using IOCMainProgram.TestApp.ConsoleApp.MenuServices;
 using IOCMainProgram.TestApp.ConsoleApp.MenuServices.ConcreteMenus;
 using IOCMainProgram.TestApp.ConsoleApp.MenuServices.MenuFunctions;
-using IOCMainProgram.TestApp.TestApp1;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,25 +33,22 @@ public static class Startup
                 IPasswordValidator validateSpecialChar = new AtLEastOneSpecialCharacterPasswordValidator(validateUpper);
 
                 string? connectionString = context.Configuration.GetConnectionString("DB1");
-
-
+                string? filePath = context.Configuration.GetSection("FilePath").GetValue<string>("Path");
 
                 service.AddSingleton<IUserService, UserService>();
                 service.AddScoped<IUserRepository, UserRepository>();
-                service.AddTransient<IPasswordValidator>(_ => new AtLeastOneDigitPasswordValidator(validateSpecialChar));
                 service.AddDbContext<CredentialDBContext>(options => options.UseSqlServer(connectionString));
-                // service.AddSingleton<CredentialDBContext>();
-                service.AddTransient<IFileWriter, FileWriter>();
+                service.AddTransient<IPasswordValidator>(_ => new AtLeastOneDigitPasswordValidator(validateSpecialChar));
+                service.AddTransient<IFileWriter>(_ => new FileWriter(filePath));
                 service.AddTransient<ICsvConverter, CsvConverter>();
                 service.AddTransient<ICreateUserFileName, CreateUserFileName>();
-                service.AddHostedService<ConsoleApp>();
                 service.AddTransient<IMainMenuService, MainMenuService>();
                 service.AddTransient<ISignUpMenuService, SignupMenuService>();
                 service.AddTransient<IMenuElements, MenuElements>();
                 service.AddTransient<ILoginMenuService, LoginMenuService>();
                 service.AddTransient<IConsoleStringReader, ConsoleStringReader>();
                 service.AddTransient<ILogoutServiceMenu, LogOutServiceMenu>();
-                service.AddScoped<IApp, TestApp1>();
+                service.AddHostedService<ConsoleApp>();
 
 
             });

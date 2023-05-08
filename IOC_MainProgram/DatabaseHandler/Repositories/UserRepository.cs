@@ -12,16 +12,8 @@ public class UserRepository : IUserRepository
 
     public void AddUser(User user)
     {
-        try
-        {
-            _credentialDBContext.Users.Add(user);
-            _credentialDBContext.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"The addition of {user.Email} to the Database failed.");
-            Console.Error.WriteLine(ex.Message);
-        }
+        _credentialDBContext.Users.Add(user);
+        _credentialDBContext.SaveChanges();
     }
 
     public bool CheckExistance(string email)
